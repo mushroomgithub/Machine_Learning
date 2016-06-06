@@ -13,7 +13,7 @@ class ClassfySample {
         this.dataSet=dataSet;
     }
 
-    public  void classfyDataSet(List<Double[]> dataSet0,List<Double[]> dataSet1){
+    public  void classfyDataSet(List<Double[]> dataSet0,List<Double[]> dataSet1){/*数据集分类*/
         for(Double[] data:dataSet){
             for(int i=0;i<data.length;i++){
                 int classfy=data[i].intValue();

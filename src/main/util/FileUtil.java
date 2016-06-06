@@ -12,5 +12,10 @@ public class FileUtil {
         FileInputStream fis=new FileInputStream(file);
         BufferedReader br=new BufferedReader(new InputStreamReader(fis,charSet));
         return br;
+ }
+
+    public void wirteFile(){
+
     }
+
 }
