@@ -48,7 +48,9 @@ public class Bayes {
         System.out.println(idx_0);
         System.out.println("size1:"+idx_1.size());
         System.out.println(idx_1);
+        for(int i=1;i<=iter;i++){
 
+        }
 
         return sampleSet;
     }
