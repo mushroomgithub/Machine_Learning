@@ -4,9 +4,7 @@ import main.util.FileUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by mashuai on 16/6/6.
@@ -36,32 +34,22 @@ public class Bayes {
         br= FileUtil.getReader(filePath,"utf-8");
         getDataSet();
         classifySample(dataSet);
-//        System.out.println("DataSet:");
-//        for(ArrayList<Integer> d:dataSet){
-//            System.out.println(d);
-//        }
-
-//        crossalidation(iter);
-//        for(int i=1;i<=iter;i++){
-            sampleSet1=classifySubSampleSet();
-//        }
-        System.out.println(sampleSet1.size());
+        sampleSet1=classifySubSampleSet();
     }
 
+    //划分十折数据集
     private static List<ArrayList<Integer>> classifySubSampleSet() {
-        int count=1;
         ArrayList<Integer>sample=null;
+        Random rand=new Random(System.currentTimeMillis());
         List<ArrayList<Integer>>sampleSet=new ArrayList<ArrayList<Integer>>();
-        while (count<=129){
-            if(count%4!=0){
-                sample=getRandomSample(dataSet0);
-            }else{
-                sample=getRandomSample(dataSet1);
-            }
-            sampleSet.add(sample);
-            System.out.println(sample);
-            count++;
-        }
+        Set<Integer>idx_0=genarateIndex(dataSet0);
+        Set<Integer>idx_1=genarateIndex(dataSet1);
+        System.out.println("size0:"+idx_0.size());
+        System.out.println(idx_0);
+        System.out.println("size1:"+idx_1.size());
+        System.out.println(idx_1);
+
+
         return sampleSet;
     }
 
@@ -73,9 +61,9 @@ public class Bayes {
                 dataSet1.add(d);
             }
         }
-        System.out.println("dataSet:"+dataSet.size());
-        System.out.println("dataSet0:"+dataSet0.size());
-        System.out.println("dataSet1:"+dataSet1.size());
+//        System.out.println("dataSet:"+dataSet.size());
+//        System.out.println("dataSet0:"+dataSet0.size());
+//        System.out.println("dataSet1:"+dataSet1.size());
     }
 
     private static void getDataSet() {
@@ -111,14 +99,27 @@ public class Bayes {
         return feature;
     }
 
-    private static ArrayList<Integer> getRandomSample(List<ArrayList<Integer>> dataSet) {
+    private static ArrayList<Integer> getRandomSample(List<ArrayList<Integer>> dSet) {
         Random rand=new Random(System.currentTimeMillis());
         ArrayList<Integer>sample=new ArrayList<Integer>();
+        Set<Integer>idx=genarateIndex(dSet);
+        Set<Integer>temp=new HashSet<Integer>();
         int index=rand.nextInt(dataSet.size());
-        sample=dataSet.get(index);
+
+        sample=dSet.get(index);
         System.out.println("sample: " + sample.get(0).intValue());
         return sample;
     }
+
+    private static Set<Integer> genarateIndex(List<ArrayList<Integer>> dSet){
+        Set<Integer> idx=new HashSet<Integer>();
+        for(ArrayList<Integer> d:dSet){
+            int index=dataSet.indexOf(d);
+            idx.add(index);
+        }
+        return idx;
+    }
+
     private static boolean isZeroClassfy(ArrayList<Integer> sample) {
         boolean isZero=false;
         if(sample.get(0).intValue() == 0){
