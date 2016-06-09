@@ -18,7 +18,7 @@ public class Bayes {
     private static List<String> subDataSet0 = new ArrayList<String>();
     private static List<String> subDataSet1 = new ArrayList<String>();
     private static List<Set<String>> set=new ArrayList<Set<String>>();
-    private static Map<String,Integer> featurePrab=new HashMap<String, Integer>();
+    private static Map<String,List<Map<String,Integer>>> featurePrab=new HashMap<String, List<Map<String,Integer>>>();
     private static final String path_dataset = "F:/JavaProgram/Bayes/file/dataset.txt";
     private static final String[] path_subset = {
             "./src/main/file/subset_1.txt",
@@ -54,14 +54,65 @@ public class Bayes {
         for(Set<String> t:set){
             System.out.println(t);
         }
-        System.out.println("<------------------------------->");
+        System.out.println("<--------------华丽的分割线----------------->");
+
+        transposeList0.remove(0);
+        List<Map<String,Integer>> prab_0=new ArrayList<Map<String, Integer>>();
         for(String temp:transposeList0){
             System.out.println(temp);
+            Map<String,Integer>map=new HashMap<String, Integer>();
+            String line[]=temp.split(Options.separator);
+            for(int i=0;i<line.length;i++){
+                String str=line[i];
+                Integer count=map.get(str);
+                if(count==null){
+                    count=1;
+                }else {
+                    count++;
+                }
+                map.put(str,count);
+            }
+            prab_0.add(map);
         }
-        System.out.println("<------------------------------->");
+        System.out.println("<-------------华丽的分割线------------------>");
+        for(Map<String,Integer>map:prab_0){
+            System.out.println("-------begin-------");
+            for(Map.Entry<String,Integer> entry:map.entrySet()){
+                System.out.println(entry.getKey()+":"+entry.getValue());
+            }
+            System.out.println("-------end-------");
+        }
+
+
+        System.out.println("<-------------华丽的分割线------------------>");
+        transposeList1.remove(0);
+        List<Map<String,Integer>> prab_1=new ArrayList<Map<String, Integer>>();
         for(String temp:transposeList1){
             System.out.println(temp);
+            Map<String,Integer>map=new HashMap<String, Integer>();
+            String line[]=temp.split(Options.separator);
+            for(int i=0;i<line.length;i++){
+                String str=line[i];
+                Integer count=map.get(str);
+                if(count==null){
+                    count=1;
+                }else {
+                    count++;
+                }
+                map.put(str,count);
+            }
+            prab_1.add(map);
         }
+        for(Map<String,Integer>map:prab_1){
+            System.out.println("-------begin-------");
+            for(Map.Entry<String,Integer> entry:map.entrySet()){
+                System.out.println(entry.getKey()+":"+entry.getValue());
+            }
+            System.out.println("-------end-------");
+        }
+
+        featurePrab.put("0",prab_0);
+        featurePrab.put("1",prab_1);
     }
 
     private static void split_0_1() {
